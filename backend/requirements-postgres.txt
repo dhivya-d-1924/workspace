@@ -1,2 +1,5 @@
 -r requirements.txt
-psycopg2-binary==2.9.9
+# psycopg (v3) - actively maintained, ships prebuilt wheels for current Python
+# versions. Django's postgres backend auto-detects either this or psycopg2,
+# no settings.py changes needed either way.
+psycopg[binary]==3.2.3

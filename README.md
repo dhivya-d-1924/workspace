@@ -99,7 +99,8 @@ ai-devworkspace/
 
 ### Requirements
 - **Python 3.11 or 3.12** (Django 5.0 doesn't yet officially support 3.13+/3.14 — using a newer
-  interpreter can cause package build failures, since prebuilt wheels lag behind new Python releases)
+  interpreter can cause package build/import failures, since prebuilt wheels lag behind new Python
+  releases. The included `runtime.txt` pins Render to 3.12.7 for this reason.)
 - MySQL 8+ or PostgreSQL 14+ (or use the SQLite fallback for a quick local trial)
 
 ### Steps
@@ -112,7 +113,7 @@ source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 # Add a database driver only if you're using MySQL or Postgres (see note below):
 #   pip install -r requirements-mysql.txt      # for MySQL
-#   pip install -r requirements-postgres.txt   # for Postgres (e.g. Render's managed DB)
+#   pip install -r requirements-postgres.txt   # for Postgres (e.g. Render's managed DB, uses psycopg v3)
 
 cp .env.example .env
 # edit .env: set DJANGO_SECRET_KEY, DB_* (or USE_SQLITE=True to skip a DB driver entirely)
