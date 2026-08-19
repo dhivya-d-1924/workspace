@@ -1,0 +1,24 @@
+Django==5.0.7
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+django-cors-headers==4.4.0
+django-filter==24.2
+drf-nested-routers==0.94.1
+python-dotenv==1.0.1
+anthropic==0.34.2
+dj-database-url==2.2.0
+
+# Production server + static file serving (used on Render / any prod deploy)
+gunicorn==22.0.0
+whitenoise==6.7.0
+
+# --------------------------------------------------------------------------
+# Database driver: install ONE of these separately, based on what you're
+# connecting to. They're kept out of this file because they compile native
+# extensions and can fail on machines without the matching build tools
+# (this is what caused the psycopg2-binary build error on Windows/Python 3.14).
+#
+#   SQLite (default local dev, USE_SQLITE=True) -> nothing extra needed
+#   Postgres (e.g. Render's managed DB)          -> pip install -r requirements-postgres.txt
+#   MySQL                                        -> pip install -r requirements-mysql.txt
+# --------------------------------------------------------------------------
