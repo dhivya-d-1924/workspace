@@ -139,15 +139,32 @@ Then:
 
 ```bash
 python manage.py migrate
-python manage.py createsuperuser   # optional, for /admin/ and to promote yourself to role=admin
 python manage.py runserver         # http://127.0.0.1:8000
 ```
 
-To make a user a platform admin (for the in-app Admin panel, distinct from
-Django's `/admin/`), either set `role='admin'` on their `User` row via the
-Django shell/admin, or promote your own superuser:
+### Creating an admin user
 
+**Option A — via environment variables (recommended; also what `render.yaml` uses on deploy):**
+
+Set these in `.env` (local) or your host's environment variables (production):
+```
+DJANGO_SUPERUSER_USERNAME=admin
+DJANGO_SUPERUSER_EMAIL=admin@example.com
+DJANGO_SUPERUSER_PASSWORD=a-strong-password
+```
+then run:
 ```bash
+python manage.py ensure_admin
+```
+This creates the account (superuser + `is_staff` + in-app `role='admin'`) or, if it
+already exists, updates it to match those values — safe to re-run any time, including
+on every deploy. On Render, set the three `DJANGO_SUPERUSER_*` env vars once in the
+dashboard and every subsequent deploy keeps the admin account in sync automatically
+(the build command already calls this command).
+
+**Option B — interactively:**
+```bash
+python manage.py createsuperuser
 python manage.py shell -c "
 from accounts.models import User
 u = User.objects.get(username='YOUR_USERNAME')
@@ -155,6 +172,8 @@ u.role = 'admin'
 u.save()
 "
 ```
+(the second command promotes the account for the in-app Admin panel, which is
+checked separately from Django's own `/admin/` superuser flag)
 
 ### Optional: enable the real LLM layer
 
